@@ -12,6 +12,7 @@
 #include "SerialLink.h"
 #endif
 #include "UDPLink.h"
+#include "AirLink.h"
 #include "TCPLink.h"
 #include "LogReplayLink.h"
 #ifdef QGC_ENABLE_BLUETOOTH
@@ -80,6 +81,9 @@ LinkConfiguration* LinkConfiguration::createSettings(int type, const QString& na
         case LinkConfiguration::TypeTcp:
             config = new TCPConfiguration(name);
             break;
+        case LinkConfiguration::TypeAirlink:
+            config = new AirLinkConfiguration(name);
+            break;
 #ifdef QGC_ENABLE_BLUETOOTH
     case LinkConfiguration::TypeBluetooth:
         config = new BluetoothConfiguration(name);
@@ -115,6 +119,9 @@ LinkConfiguration* LinkConfiguration::duplicateSettings(LinkConfiguration* sourc
             break;
         case TypeTcp:
             dupe = new TCPConfiguration(qobject_cast<TCPConfiguration*>(source));
+            break;
+        case TypeAirlink:
+            dupe = new UDPConfiguration(qobject_cast<UDPConfiguration*>(source));
             break;
 #ifdef QGC_ENABLE_BLUETOOTH
         case TypeBluetooth:

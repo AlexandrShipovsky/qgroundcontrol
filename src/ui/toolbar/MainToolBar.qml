@@ -83,6 +83,15 @@ Rectangle {
             onClicked:          _activeVehicle.closeVehicle()
             visible:            _activeVehicle && _communicationLost && currentToolbar === flyViewToolbar
         }
+
+        Button {
+            id: tutBtn
+            text: qsTr("ОбамаБля")
+            width: height
+            onClicked: {
+            tutBtn.text = qsTr("Оба");
+            }
+        }
     }
 
     QGCFlickable {

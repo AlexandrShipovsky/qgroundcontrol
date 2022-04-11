@@ -82,7 +82,7 @@ signals:
     void localPortChanged   (void);
     void hostListChanged    (void);
 
-private:
+public:
     void _updateHostList    (void);
     void _clearTargetHosts  (void);
     void _copyFrom          (LinkConfiguration *source);
@@ -110,11 +110,11 @@ public:
 public slots:
     void readBytes(void);
 
-private slots:
+public slots:
     // LinkInterface overrides
     void _writeBytes(const QByteArray data) override;
 
-private:
+public:
 
     // LinkInterface overrides
     bool _connect(void) override;

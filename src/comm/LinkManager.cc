@@ -21,6 +21,7 @@
 #include "LinkManager.h"
 #include "QGCApplication.h"
 #include "UDPLink.h"
+#include "AirLink.h"
 #include "TCPLink.h"
 #include "SettingsManager.h"
 #include "LogReplayLink.h"
@@ -125,6 +126,8 @@ bool LinkManager::createConnectedLink(SharedLinkConfigurationPtr& config, bool i
     case LinkConfiguration::TypeTcp:
         link = std::make_shared<TCPLink>(config);
         break;
+    case LinkConfiguration::TypeAirlink:
+        link = std::make_shared<AirLink>(config);
 #ifdef QGC_ENABLE_BLUETOOTH
     case LinkConfiguration::TypeBluetooth:
         link = std::make_shared<BluetoothLink>(config);
@@ -307,6 +310,9 @@ void LinkManager::loadLinkConfigurationList()
                                 break;
                             case LinkConfiguration::TypeTcp:
                                 link = new TCPConfiguration(name);
+                                break;
+                            case LinkConfiguration::TypeAirlink:
+                                link = new UDPConfiguration(name);
                                 break;
 #ifdef QGC_ENABLE_BLUETOOTH
                             case LinkConfiguration::TypeBluetooth:
@@ -684,6 +690,7 @@ QStringList LinkManager::linkTypeStrings(void) const
 #endif
         list += tr("UDP");
         list += tr("TCP");
+        list += tr("AIRLINK");
 #ifdef QGC_ENABLE_BLUETOOTH
         list += "Bluetooth";
 #endif

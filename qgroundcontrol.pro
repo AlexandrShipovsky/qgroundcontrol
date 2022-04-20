@@ -428,14 +428,31 @@ contains (DEFINES, QGC_ENABLE_PAIRING) {
 #
 
 HEADERS += \
+    src/AirLink/AirLinkSettings.h \
+    src/AirLink/air-link/air-link.h \
+    src/AirLink/air-link/air-link.hpp \
+    src/AirLink/air-link/gtestsuite.hpp \
+    src/AirLink/air-link/mavlink.h \
+    src/AirLink/air-link/mavlink_msg_airlink_auth.h \
+    src/AirLink/air-link/mavlink_msg_airlink_auth.hpp \
+    src/AirLink/air-link/testsuite.h \
+    src/AirLink/air-link/version.h \
+    src/AirLink/checksum.h \
+    src/AirLink/mavlink_conversions.h \
+    src/AirLink/mavlink_get_info.h \
+    src/AirLink/mavlink_helpers.h \
+    src/AirLink/mavlink_sha256.h \
+    src/AirLink/mavlink_types.h \
+    src/AirLink/message.hpp \
+    src/AirLink/msgmap.hpp \
+    src/AirLink/protocol.h \
     src/QmlControls/QmlUnitsConversion.h \
     src/Vehicle/VehicleEscStatusFactGroup.h \
     src/api/QGCCorePlugin.h \
     src/api/QGCOptions.h \
     src/api/QGCSettings.h \
     src/api/QmlComponentInfo.h \
-    src/GPS/Drivers/src/base_station.h \
-    src/comm/AirLink.h
+    src/GPS/Drivers/src/base_station.h
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     HEADERS += \
@@ -443,12 +460,12 @@ contains (DEFINES, QGC_ENABLE_PAIRING) {
 }
 
 SOURCES += \
+    src/AirLink/AirLinkSettings.cc \
     src/Vehicle/VehicleEscStatusFactGroup.cc \
     src/api/QGCCorePlugin.cc \
     src/api/QGCOptions.cc \
     src/api/QGCSettings.cc \
-    src/api/QmlComponentInfo.cc \
-    src/comm/AirLink.cc
+    src/api/QmlComponentInfo.cc
 
 contains (DEFINES, QGC_ENABLE_PAIRING) {
     SOURCES += \

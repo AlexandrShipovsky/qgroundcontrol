@@ -110,11 +110,11 @@ public:
 public slots:
     void readBytes(void);
 
-public slots:
+private slots:
     // LinkInterface overrides
     void _writeBytes(const QByteArray data) override;
 
-public:
+    private:
 
     // LinkInterface overrides
     bool _connect(void) override;

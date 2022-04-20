@@ -45,6 +45,8 @@ public:
             delete pGeneral;
         if(pCommLinks)
             delete pCommLinks;
+        if(pAirLink)
+            delete pAirLink;
         if(pOfflineMaps)
             delete pOfflineMaps;
 #if defined(QGC_GST_TAISYNC_ENABLED)
@@ -77,6 +79,7 @@ public:
 
     QmlComponentInfo* pGeneral                  = nullptr;
     QmlComponentInfo* pCommLinks                = nullptr;
+    QmlComponentInfo* pAirLink                = nullptr;
     QmlComponentInfo* pOfflineMaps              = nullptr;
 #if defined(QGC_GST_TAISYNC_ENABLED)
     QmlComponentInfo* pTaisync                  = nullptr;
@@ -139,6 +142,10 @@ QVariantList &QGCCorePlugin::settingsPages()
                                               QUrl::fromUserInput("qrc:/qml/LinkSettings.qml"),
                                               QUrl::fromUserInput("qrc:/res/waves.svg"));
         _p->settingsList.append(QVariant::fromValue(reinterpret_cast<QmlComponentInfo*>(_p->pCommLinks)));
+        _p->pAirLink = new QmlComponentInfo(tr("AirLink"),
+                                              QUrl::fromUserInput("qrc:/qml/AirLinkSetting.qml"),
+                                              QUrl::fromUserInput("qrc:/res/waves.svg"));
+        _p->settingsList.append(QVariant::fromValue(reinterpret_cast<QmlComponentInfo*>(_p->pAirLink)));
         _p->pOfflineMaps = new QmlComponentInfo(tr("Offline Maps"),
                                                 QUrl::fromUserInput("qrc:/qml/OfflineMap.qml"),
                                                 QUrl::fromUserInput("qrc:/res/waves.svg"));

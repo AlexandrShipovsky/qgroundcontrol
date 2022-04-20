@@ -33,6 +33,7 @@ class MAVLinkLogManager;
 class QGCCorePlugin;
 class SettingsManager;
 class AirspaceManager;
+class AirLinkManager;
 class ADSBVehicleManager;
 #if defined(QGC_ENABLE_PAIRING)
 class PairingManager;
@@ -68,6 +69,7 @@ public:
     QGCCorePlugin*              corePlugin              () { return _corePlugin; }
     SettingsManager*            settingsManager         () { return _settingsManager; }
     AirspaceManager*            airspaceManager         () { return _airspaceManager; }
+    AirLinkManager*             airlinkManager          () { return _airlinkManager; }
     ADSBVehicleManager*         adsbVehicleManager      () { return _adsbVehicleManager; }
 #if defined(QGC_ENABLE_PAIRING)
     PairingManager*             pairingManager          () { return _pairingManager; }
@@ -108,6 +110,7 @@ private:
     QGCCorePlugin*              _corePlugin             = nullptr;
     SettingsManager*            _settingsManager        = nullptr;
     AirspaceManager*            _airspaceManager        = nullptr;
+    AirLinkManager*             _airlinkManager         = nullptr;
     ADSBVehicleManager*         _adsbVehicleManager     = nullptr;
 #if defined(QGC_ENABLE_PAIRING)
     PairingManager*             _pairingManager         = nullptr;

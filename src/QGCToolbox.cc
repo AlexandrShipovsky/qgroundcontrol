@@ -39,6 +39,7 @@
 #else
 #include "AirspaceManager.h"
 #endif
+#include "AirLink/AirLinkSettings.h"
 #if defined(QGC_GST_TAISYNC_ENABLED)
 #include "TaisyncManager.h"
 #endif
@@ -86,6 +87,7 @@ QGCToolbox::QGCToolbox(QGCApplication* app)
 #else
     _airspaceManager        = new AirspaceManager           (app, this);
 #endif
+    _airlinkManager        = new AirLinkManager             (app, this);
 #if defined(QGC_GST_TAISYNC_ENABLED)
     _taisyncManager         = new TaisyncManager            (app, this);
 #endif

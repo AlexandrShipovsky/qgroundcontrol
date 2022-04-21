@@ -2,37 +2,20 @@
 #include "AirLinkSettings.h"
 #include "air-link/mavlink_msg_airlink_auth.h"
 
-static mavlink_airlink_auth_t airlink_auth =
-{
-    "shipovsky.alexandr@yandex.ru",
-    "wqfgujq1995",
-};
-
-static uint8_t AirLinkMAVBuf[512];
-static mavlink_message_t mavmsg;
-static ssize_t len = 0;
-
-
 //-----------------------------------------------------------------------------
 AirLinkManager::AirLinkManager(QGCApplication* app, QGCToolbox* toolbox)
     : QGCTool(app, toolbox)
 {
-    _disconnect();
+    qmlRegisterUncreatableType<AirLinkManager>             ("QGroundControl.Airlink",      1, 0, "AirLinkManager",                "Reference only");
 }
 
 //-----------------------------------------------------------------------------
 AirLinkManager::~AirLinkManager()
 {
-    _disconnect();
+    disconnect();
 }
-/*
-void AirLinkManager::setToolbox(QGCToolbox* toolbox)
-{
 
-}
-*/
-
-void AirLinkManager::_connect()
+void AirLinkManager::connect(QString login,QString pass)
 {
     LinkManager* linkMgr = qgcApp()->toolbox()->linkManager();
 
@@ -42,25 +25,39 @@ void AirLinkManager::_connect()
     linkMgr->createConnectedLink(config);
 
     _udpConfig->addHost(AirLinkHost,10000);
-    _authServer(config->link());
+    _authServer(config->link(),login,pass);
 }
 
-void AirLinkManager::_disconnect()
+void AirLinkManager::disconnect()
 {
     if(_udpConfig == nullptr)
     {
         return;
     }
+    _udpConfig->link()->disconnect();
     if(_udpConfig->_hostList.indexOf(AirLinkHost,0) != -1)
     {
         _udpConfig->removeHost(AirLinkHost);
     }
 }
 
-void AirLinkManager::_authServer(LinkInterface* link)
+void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
 {
+    mavlink_airlink_auth_t airlink_auth = {.login = {0x00}, .password = {0x00}};
+    uint8_t AirLinkMAVBuf[512] = {0x00};
+    mavlink_message_t mavmsg;
+    ssize_t len = 0;
+
+    std::string logincpy = login.toStdString();
+    std::string passcpy = pass.toStdString();
+
+    strcpy(airlink_auth.login,logincpy.c_str());
+    strcpy(airlink_auth.password,passcpy.c_str());
+
     mavlink_msg_airlink_auth_pack(0,0,&mavmsg,airlink_auth.login,airlink_auth.password);
     len = mavlink_msg_to_send_buffer(AirLinkMAVBuf,&mavmsg);
-     link->writeBytesThreadSafe((const char *)AirLinkMAVBuf,len);
+    link->writeBytesThreadSafe((const char *)AirLinkMAVBuf,len);
     qDebug() << "Connect to AirLink";
+    qDebug() << airlink_auth.login;
+    qDebug() << airlink_auth.password;
 };

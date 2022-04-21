@@ -126,6 +126,7 @@ Item {
                     anchors.centerIn:   parent
                     QGCLabel        { text: qsTr("User Name:") }
                     FactTextField {
+                        id:             _userText
                         fact:           _usernameFact
                         width:          _editFieldWidth
                         visible:        _usernameFact.visible
@@ -153,6 +154,7 @@ Item {
                     }
                     QGCLabel { text: qsTr("Password:") }
                     FactTextField {
+                        id:             _passText
                         fact:           _passwordFact
                         width:          _editFieldWidth
                         visible:        _passwordFact.visible
@@ -161,6 +163,7 @@ Item {
                         Layout.minimumWidth: _editFieldWidth
                         property Fact _passwordFact: QGroundControl.settingsManager.airMapSettings.password
                     }
+
                     Item {
                         width:  1
                         height: 1
@@ -180,6 +183,25 @@ Item {
                         height: 1
                         Layout.columnSpan:  3
                     }
+
+                    QGCButton {
+                        text:               qsTr("Connect")
+                        Layout.alignment:   Qt.AlignHCenter
+                        Layout.columnSpan:  3
+                        onClicked: {
+                            QGroundControl.airlinkManager.connect(_userText.text,_passText.text)
+                        }
+                    }
+
+                    QGCButton {
+                        text:               qsTr("Disconnect")
+                        Layout.alignment:   Qt.AlignHCenter
+                        Layout.columnSpan:  3
+                        onClicked: {
+                            QGroundControl.airlinkManager.disconnect()
+                        }
+                    }
+
                     QGCButton {
                         text:               qsTr("Register for an AirLink Account")
                         Layout.alignment:   Qt.AlignHCenter
@@ -189,24 +211,10 @@ Item {
                         }
 
                     }
-
-                    QGCButton {
-                        text:               qsTr("Connect")
-                        Layout.alignment:   Qt.AlignHCenter
-                        Layout.columnSpan:  3
-                        onClicked: {
-                            QGroundControl.airlinkManager._connect();
-                        }
-                    }
                 }
-
             }
 
         }
     }
 }
-
-
-
-
 

@@ -12,13 +12,11 @@ public:
     AirLinkManager(QGCApplication* app, QGCToolbox* toolbox);
     ~AirLinkManager();
 
-//    void setToolbox (QGCToolbox* toolbox) override;
-
-    Q_INVOKABLE void _connect(void);
-    void _disconnect(void);
+    Q_INVOKABLE void connect(QString login,QString pass);
+    Q_INVOKABLE void disconnect(void);
 
 private:
-    void _authServer(LinkInterface* link);
+    void _authServer(LinkInterface* link, QString login, QString pass);
 
     UDPConfiguration* _udpConfig;
     const QString AirLinkHost = "air-link.space";

@@ -7,6 +7,9 @@ AirLinkManager::AirLinkManager(QGCApplication* app, QGCToolbox* toolbox)
     : QGCTool(app, toolbox)
 {
     qmlRegisterUncreatableType<AirLinkManager>             ("QGroundControl.Airlink",      1, 0, "AirLinkManager",                "Reference only");
+
+    _isconnect = false;
+    _authStatus = Unknown;
 }
 
 //-----------------------------------------------------------------------------
@@ -39,6 +42,8 @@ void AirLinkManager::disconnect()
     {
         _udpConfig->removeHost(AirLinkHost);
     }
+    _isconnect = false;
+    emit connectStatusChanged();
 }
 
 void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
@@ -57,7 +62,13 @@ void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
     mavlink_msg_airlink_auth_pack(0,0,&mavmsg,airlink_auth.login,airlink_auth.password);
     len = mavlink_msg_to_send_buffer(AirLinkMAVBuf,&mavmsg);
     link->writeBytesThreadSafe((const char *)AirLinkMAVBuf,len);
+
+    // For debug
     qDebug() << "Connect to AirLink";
+
+    _isconnect = true;
+    emit connectStatusChanged();
+
     qDebug() << airlink_auth.login;
     qDebug() << airlink_auth.password;
 };

@@ -40,8 +40,7 @@ Item {
     property real _buttonWidth:                 ScreenTools.defaultFontPixelWidth * 18
     property real _panelWidth:                  _root.width * _internalWidthRatio
     property Fact _enableAirMapFact:            QGroundControl.settingsManager.airMapSettings.enableAirMap
-    property bool _airMapEnabled:               _enableAirMapFact.rawValue
-    property var  _authStatus:                  QGroundControl.airspaceManager.authStatus
+    property var  _authStatus:                  QGroundControl.airlinkManager.authStatus
 
     readonly property real _internalWidthRatio:          0.8
 
@@ -65,7 +64,7 @@ Item {
                 height:                     statusLabel.height
                 anchors.margins:            ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter:   parent.horizontalCenter
-                visible:                    QGroundControl.settingsManager.appSettings.visible && _airMapEnabled
+                visible:                    true
                 QGCLabel {
                     id:                     statusLabel
                     text:                   qsTr("Connection Status")
@@ -76,7 +75,7 @@ Item {
                 height:                     statusCol.height + (ScreenTools.defaultFontPixelHeight * 2)
                 width:                      _panelWidth
                 color:                      qgcPal.windowShade
-                visible:                    QGroundControl.settingsManager.appSettings.visible && _airMapEnabled
+                visible:                    true
                 anchors.margins:            ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter:   parent.horizontalCenter
                 Column {
@@ -85,16 +84,8 @@ Item {
                     width:                  parent.width
                     anchors.centerIn:       parent
                     QGCLabel {
-                        text:                       QGroundControl.airspaceManager.connected ? qsTr("Connected") : qsTr("Not Connected")
-                        color:                      QGroundControl.airspaceManager.connected ? qgcPal.colorGreen : qgcPal.colorRed
-                        anchors.horizontalCenter:   parent.horizontalCenter
-                    }
-                    QGCLabel {
-                        text:                       QGroundControl.airspaceManager.connectStatus
-                        visible:                    QGroundControl.airspaceManager.connectStatus != ""
-                        wrapMode:                   Text.WordWrap
-                        horizontalAlignment:        Text.AlignHCenter
-                        width:                      parent.width * 0.8
+                        text:                       QGroundControl.airlinkManager.isconnect ? qsTr("Connected") : qsTr("Not Connected")
+                        color:                      QGroundControl.airlinkManager.isconnect ? qgcPal.colorGreen : qgcPal.colorRed
                         anchors.horizontalCenter:   parent.horizontalCenter
                     }
                 }
@@ -139,10 +130,6 @@ Item {
                             if(!QGroundControl.airspaceManager.connected)
                                 return qsTr("Not Connected")
                             switch(_authStatus) {
-                            case AirspaceManager.Unknown:
-                                return ""
-                            case AirspaceManager.Anonymous:
-                                return qsTr("Anonymous")
                             case AirspaceManager.Authenticated:
                                 return qsTr("Authenticated")
                             default:

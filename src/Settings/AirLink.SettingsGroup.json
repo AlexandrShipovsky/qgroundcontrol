@@ -1,0 +1,19 @@
+{
+    "version":      1,
+    "fileType":  "FactMetaData",
+    "QGC.MetaData.Facts":
+[
+{
+    "name":             "userName",
+    "shortDesc": "AirLink User Name",
+    "type":             "string",
+    "default":     ""
+},
+{
+    "name":             "password",
+    "shortDesc": "AirLink Password",
+    "type":             "string",
+    "default":     ""
+}
+]
+}

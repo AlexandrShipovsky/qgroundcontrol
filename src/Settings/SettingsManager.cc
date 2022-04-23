@@ -17,6 +17,7 @@ SettingsManager::SettingsManager(QGCApplication* app, QGCToolbox* toolbox)
 #if defined(QGC_AIRMAP_ENABLED)
     , _airMapSettings       (nullptr)
 #endif
+    , _airLinkSettings       (nullptr)
     , _appSettings                  (nullptr)
     , _unitsSettings                (nullptr)
     , _autoConnectSettings          (nullptr)
@@ -60,4 +61,5 @@ void SettingsManager::setToolbox(QGCToolbox *toolbox)
 #if defined(QGC_AIRMAP_ENABLED)
     _airMapSettings =               new AirMapSettings          (this);
 #endif
+    _airLinkSettings =              new AirLinkSettings          (this);
 }

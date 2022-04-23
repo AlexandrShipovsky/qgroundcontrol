@@ -1,3 +1,6 @@
+#include <QQmlEngine>
+#include <QtQml>
+
 #include "QGCApplication.h"
 #include "AirLinkSettings.h"
 #include "air-link/mavlink_msg_airlink_auth.h"
@@ -72,3 +75,13 @@ void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
     qDebug() << airlink_auth.login;
     qDebug() << airlink_auth.password;
 };
+
+
+
+DECLARE_SETTINGGROUP(AirLink, "AirLink")
+{
+    qmlRegisterUncreatableType<AirLinkSettings>("QGroundControl.SettingsManager", 1, 0, "AirLinkSettings", "Reference only");
+}
+
+DECLARE_SETTINGSFACT(AirLinkSettings, userName)
+DECLARE_SETTINGSFACT(AirLinkSettings, password)

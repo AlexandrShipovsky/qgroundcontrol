@@ -39,7 +39,6 @@ Item {
     property real _editFieldWidth:              ScreenTools.defaultFontPixelWidth * 20
     property real _buttonWidth:                 ScreenTools.defaultFontPixelWidth * 18
     property real _panelWidth:                  _root.width * _internalWidthRatio
-    property Fact _enableAirMapFact:            QGroundControl.settingsManager.airMapSettings.enableAirMap
     property var  _authStatus:                  QGroundControl.airlinkManager.authStatus
 
     readonly property real _internalWidthRatio:          0.8
@@ -123,7 +122,7 @@ Item {
                         visible:        _usernameFact.visible
                         Layout.fillWidth:    true
                         Layout.minimumWidth: _editFieldWidth
-                        property Fact _usernameFact: QGroundControl.settingsManager.airMapSettings.userName
+                        property Fact _usernameFact: QGroundControl.settingsManager.airLinkSettings.userName
                     }
                     QGCLabel {
                         text: {
@@ -148,7 +147,7 @@ Item {
                         echoMode:       TextInput.Password
                         Layout.fillWidth:    true
                         Layout.minimumWidth: _editFieldWidth
-                        property Fact _passwordFact: QGroundControl.settingsManager.airMapSettings.password
+                        property Fact _passwordFact: QGroundControl.settingsManager.airLinkSettings.password
                     }
 
                     Item {

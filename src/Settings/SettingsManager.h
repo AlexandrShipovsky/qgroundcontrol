@@ -30,6 +30,7 @@
 #if defined(QGC_AIRMAP_ENABLED)
 #include "AirMapSettings.h"
 #endif
+#include "AirLink/AirLinkSettings.h"
 #include <QVariantList>
 
 /// Provides access to all app settings
@@ -43,6 +44,7 @@ public:
 #if defined(QGC_AIRMAP_ENABLED)
     Q_PROPERTY(QObject* airMapSettings                  READ airMapSettings                 CONSTANT)
 #endif
+    Q_PROPERTY(QObject* airLinkSettings                 READ airLinkSettings                 CONSTANT)
     Q_PROPERTY(QObject* appSettings                     READ appSettings                    CONSTANT)
     Q_PROPERTY(QObject* unitsSettings                   READ unitsSettings                  CONSTANT)
     Q_PROPERTY(QObject* autoConnectSettings             READ autoConnectSettings            CONSTANT)
@@ -64,6 +66,7 @@ public:
 #if defined(QGC_AIRMAP_ENABLED)
     AirMapSettings*         airMapSettings      (void) { return _airMapSettings; }
 #endif
+    AirLinkSettings*         airLinkSettings      (void) { return _airLinkSettings; }
     AppSettings*                    appSettings                 (void) { return _appSettings; }
     UnitsSettings*                  unitsSettings               (void) { return _unitsSettings; }
     AutoConnectSettings*            autoConnectSettings         (void) { return _autoConnectSettings; }
@@ -83,6 +86,7 @@ private:
 #if defined(QGC_AIRMAP_ENABLED)
     AirMapSettings*         _airMapSettings;
 #endif
+    AirLinkSettings*        _airLinkSettings;
     AppSettings*                    _appSettings;
     UnitsSettings*                  _unitsSettings;
     AutoConnectSettings*            _autoConnectSettings;

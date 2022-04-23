@@ -1,9 +1,9 @@
-#ifndef AIRLINKSETTINGS_H
-#define AIRLINKSETTINGS_H
+#pragma once
 
 #include "LinkManager.h"
 #include "UDPLink.h"
 #include "QGCToolbox.h"
+#include "SettingsGroup.h"
 
 class AirLinkManager : public QGCTool
 {
@@ -44,4 +44,16 @@ signals:
         void authStatusChanged();
 };
 
-#endif // AIRLINKSETTINGS_H
+class AirLinkSettings : public SettingsGroup
+{
+    Q_OBJECT
+public:
+    AirLinkSettings(QObject* parent = nullptr);
+
+    DEFINE_SETTING_NAME_GROUP()
+
+    DEFINE_SETTINGFACT(userName)
+    DEFINE_SETTINGFACT(password)
+
+};
+

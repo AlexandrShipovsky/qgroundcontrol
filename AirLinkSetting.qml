@@ -19,7 +19,7 @@ import QtLocation               5.3
 import QtPositioning            5.3
 
 import QGroundControl                       1.0
-import QGroundControl.Airspace              1.0
+import QGroundControl.Airlink               1.0
 import QGroundControl.Controllers           1.0
 import QGroundControl.Controls              1.0
 import QGroundControl.FactControls          1.0
@@ -70,25 +70,6 @@ Item {
                     font.family:            ScreenTools.demiboldFontFamily
                 }
             }
-            Rectangle {
-                height:                     statusCol.height + (ScreenTools.defaultFontPixelHeight * 2)
-                width:                      _panelWidth
-                color:                      qgcPal.windowShade
-                visible:                    true
-                anchors.margins:            ScreenTools.defaultFontPixelWidth
-                anchors.horizontalCenter:   parent.horizontalCenter
-                Column {
-                    id:                     statusCol
-                    spacing:                ScreenTools.defaultFontPixelHeight * 0.5
-                    width:                  parent.width
-                    anchors.centerIn:       parent
-                    QGCLabel {
-                        text:                       QGroundControl.airlinkManager.isconnect ? qsTr("Connected") : qsTr("Not Connected")
-                        color:                      QGroundControl.airlinkManager.isconnect ? qgcPal.colorGreen : qgcPal.colorRed
-                        anchors.horizontalCenter:   parent.horizontalCenter
-                    }
-                }
-            }
             //-----------------------------------------------------------------
             //-- Login / Registration
             Item {
@@ -126,13 +107,24 @@ Item {
                     }
                     QGCLabel {
                         text: {
-                            if(!QGroundControl.airspaceManager.connected)
+                            if(!QGroundControl.airlinkManager.isconnect)
                                 return qsTr("Not Connected")
                             switch(_authStatus) {
-                            case AirspaceManager.Authenticated:
+                            case AirLinkManager.Authenticated:
                                 return qsTr("Authenticated")
                             default:
                                 return qsTr("Authentication Error")
+                            }
+                        }
+                        color:
+                        {
+                            if(!QGroundControl.airlinkManager.isconnect)
+                                return qgcPal.colorRed
+                            switch(_authStatus) {
+                            case AirLinkManager.Authenticated:
+                                return qgcPal.colorGreen
+                            default:
+                                return qgcPal.colorRed
                             }
                         }
                         Layout.rowSpan:     2

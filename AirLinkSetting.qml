@@ -54,23 +54,6 @@ Item {
             spacing:            ScreenTools.defaultFontPixelHeight * 0.5
             anchors.margins:    ScreenTools.defaultFontPixelWidth
             //-----------------------------------------------------------------
-            //-- General
-
-            //-----------------------------------------------------------------
-            //-- Connection Status
-            Item {
-                width:                      _panelWidth
-                height:                     statusLabel.height
-                anchors.margins:            ScreenTools.defaultFontPixelWidth
-                anchors.horizontalCenter:   parent.horizontalCenter
-                visible:                    true
-                QGCLabel {
-                    id:                     statusLabel
-                    text:                   qsTr("Connection Status")
-                    font.family:            ScreenTools.demiboldFontFamily
-                }
-            }
-            //-----------------------------------------------------------------
             //-- Login / Registration
             Item {
                 width:                      _panelWidth
@@ -108,24 +91,29 @@ Item {
                     QGCLabel {
                         text: {
                             if(!QGroundControl.airlinkManager.isconnect)
+                            {
                                 return qsTr("Not Connected")
-                            switch(_authStatus) {
+                            }else{return qsTr("Connected")}
+                        /*    switch(_authStatus) {
                             case AirLinkManager.Authenticated:
                                 return qsTr("Authenticated")
                             default:
                                 return qsTr("Authentication Error")
-                            }
+                            } */
                         }
                         color:
                         {
                             if(!QGroundControl.airlinkManager.isconnect)
-                                return qgcPal.colorRed
+                            {return qgcPal.colorRed}
+                            else{return qgcPal.colorGreen}
+                            /*
                             switch(_authStatus) {
                             case AirLinkManager.Authenticated:
                                 return qgcPal.colorGreen
                             default:
                                 return qgcPal.colorRed
                             }
+                            */
                         }
                         Layout.rowSpan:     2
                         Layout.alignment:   Qt.AlignVCenter
@@ -150,22 +138,11 @@ Item {
                         width:  1
                         height: 1
                         Layout.columnSpan: 3
+                        Layout.rowSpan: 3
                     }
-                    QGCLabel {
-                        text:               qsTr("Forgot Your AirLink Password?")
-                        Layout.alignment:   Qt.AlignHCenter
-                        Layout.columnSpan:  3
-                    }
-                    Item {
-                        width:  1
-                        height: 1
-                        Layout.columnSpan:  3
-                    }
-
                     QGCButton {
                         text:               qsTr("Connect")
                         Layout.alignment:   Qt.AlignHCenter
-                        Layout.columnSpan:  3
                         onClicked: {
                             QGroundControl.airlinkManager.connect(_userText.text,_passText.text)
                         }
@@ -174,10 +151,20 @@ Item {
                     QGCButton {
                         text:               qsTr("Disconnect")
                         Layout.alignment:   Qt.AlignHCenter
-                        Layout.columnSpan:  3
                         onClicked: {
                             QGroundControl.airlinkManager.disconnect()
                         }
+                    }
+                    Item {
+                        width:  1
+                        height: 1
+                        Layout.columnSpan:  3
+                    }
+
+                    QGCLabel {
+                        text:               qsTr("Forgot Your AirLink Password?")
+                        Layout.alignment:   Qt.AlignHCenter
+                        Layout.columnSpan:  3
                     }
 
                     QGCButton {

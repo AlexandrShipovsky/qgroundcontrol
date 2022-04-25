@@ -40,12 +40,16 @@ void AirLinkManager::disconnect()
     {
         return;
     }
-    _udpConfig->link()->disconnect();
-    if(_udpConfig->_hostList.indexOf(AirLinkHost,0) != -1)
+
+    if(_isconnect)
     {
-        _udpConfig->removeHost(AirLinkHost);
+        _udpConfig->link()->disconnect();
+        if(_udpConfig->_hostList.indexOf(AirLinkHost,0) != -1)
+        {
+            _udpConfig->removeHost(AirLinkHost);
+        }
+        _isconnect = false;
     }
-    _isconnect = false;
     emit connectStatusChanged();
 }
 
@@ -72,8 +76,11 @@ void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
     _isconnect = true;
     emit connectStatusChanged();
 
-    qDebug() << airlink_auth.login;
-    qDebug() << airlink_auth.password;
+    //    qDebug() << airlink_auth.login;
+    //    qDebug() << airlink_auth.password;
+
+    // read answer from server
+    //   link->bytesReceived(link,data);
 };
 
 

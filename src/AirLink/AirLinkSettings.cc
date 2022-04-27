@@ -55,11 +55,13 @@ void AirLinkManager::disconnect()
 
 void AirLinkManager::_authServer(LinkInterface* link,QString login,QString pass)
 {
-    mavlink_airlink_auth_t airlink_auth = {.login = {0x00}, .password = {0x00}};
+    mavlink_airlink_auth_t airlink_auth; //= {.login = {0x00}, .password = {0x00}};
     uint8_t AirLinkMAVBuf[512] = {0x00};
     mavlink_message_t mavmsg;
-    ssize_t len = 0;
+    uint16_t len = 0;
 
+    memset(&airlink_auth.login,0x00,sizeof(airlink_auth.login));
+    memset(&airlink_auth.password,0x00,sizeof(airlink_auth.password));
     std::string logincpy = login.toStdString();
     std::string passcpy = pass.toStdString();
 
